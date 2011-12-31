@@ -3,12 +3,19 @@ require './poly'
 class Poly::Schedule
   include Poly
  
-  def initialize(trimester,postParams)
+  # Trimesters : Hash of the possible trimesters {:id => :label}
+  # postParams : PostParams obtained from the connection
+  def initialize(trimesters,postParams)
     @params = postParams
+    @trimesters = trimesters
+  end
+
+  def get(trimester)
+    raise "Invalid trimester" unless trimesterValid?(trimester)
+    
     @params['trimestre'] = trimester
     @response = fetch(Poly::URL[:schedule],@params)
   end
-
 
   def to_xml
     html = @response.body.to_s
@@ -19,8 +26,14 @@ class Poly::Schedule
       config.noent
     end
 
-    xsl = Nokogiri::XSLT(File.read('./poly2XML.xsl'))
+    xsl = Nokogiri::XSLT(File.read(Poly::XSLDocs[:poly2XML]))
     
     return xsl.transform(doc)
+  end
+  
+  private
+  
+  def trimesterValid?(id)
+    return @trimesters.has_key?(id)
   end
 end

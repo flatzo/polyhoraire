@@ -6,17 +6,33 @@ class Ui
   include Singleton
   
   def initialize  
-    @poly = Poly::Auth.new 
+    @auth = Poly::Auth.new 
   end
   
   def run
     # Connect to poly
     begin
       connectPoly
-      puts "Erreur : " + @poly.error[:message] unless @poly.connected?
-    end until @poly.connected?
+    rescue
+      puts "Erreur : " + @auth.error[:message]
+      retry
+    end
     
-    schedule = Poly::Schedule.new(trimester,@poly.postParams)
+    schedule = Poly::Schedule.new(@auth.trimesters,@auth.postParams)
+    
+    
+    begin
+      trimester = selectTrimester
+      schedule.get(trimester)
+    rescue
+      "Erreur : Trimester invalide"
+      retry
+    end 
+    
+    puts schedule.to_xml.to_s
+    
+    
+    
     
   end
   
@@ -33,6 +49,23 @@ class Ui
     puts "Date de naissance : "
     bday = gets.chomp
   
-    @poly.connect(user,password,bday) 
+    @auth.connect(user,password,bday) 
+  end
+  
+  def selectTrimester
+    puts "----------------------"
+    puts " Liste des trimestres "
+    puts "----------------------"
+    showTrimesters
+    puts ""
+    puts "Selectionner le trimester :"
+    trimester = gets.chomp
+    return trimester
+  end
+  
+  def showTrimesters
+    @auth.trimesters.each do |id,label|
+      puts id + " : " + label
+    end
   end
 end

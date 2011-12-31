@@ -5,13 +5,16 @@ require 'uri'
 require 'nokogiri'
 
 
-require './ui'
-
 module Poly
   URL = {
     :connection => "https://www4.polymtl.ca/servlet/ValidationServlet",
     :schedule   => "https://www4.polymtl.ca/servlet/PresentationHorairePersServlet"
     }
+    
+  XSLDocs = {
+    :poly2XML     => "./poly/poly2XML.xsl",
+    :exportGoogle => "./google.xsl"
+  }
   
   def fetch(uri,params)
     url = URI.parse(uri)
@@ -32,7 +35,9 @@ module Poly
     
 end
 
+# Run only if the script is called directly from cli
 if __FILE__ == $0
-  Ui.instance.run
+  require './ui'
   
+  Ui.instance.run
 end

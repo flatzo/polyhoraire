@@ -2,6 +2,11 @@ require './poly'
 
 class Poly::Auth
   include Poly
+  
+  def initialize
+    @postParams = Hash.new
+    @trimesters = Hash.new
+  end
 
   def connect(user, password, bday)
     params = {
@@ -16,12 +21,24 @@ class Poly::Auth
   def connected? 
     return @connected
   end
+  
 
   def credentialsValid?(user,password,bday)
     connect(user,password,bday)
     return connected?
   end
   
+  
+  # Getters
+  def postParams
+    return @postParams
+  end
+  def trimesters
+    return @trimesters
+  end
+  def error
+    return @error
+  end
   
   
   
@@ -70,6 +87,7 @@ class Poly::Auth
       
       # Extract the error number and message
       @error = extractError(nodes.first)
+      raise "Not connected"
     end
   end
   
