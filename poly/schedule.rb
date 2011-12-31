@@ -16,8 +16,12 @@ class Poly::Schedule
     @params['trimestre'] = trimester
     @response = fetch(Poly::URL[:schedule],@params)
   end
-
+  
   def to_xml
+    to_xml_doc.to_s
+  end
+
+  def to_xml_doc
     html = @response.body.to_s
     # Too much spaces, substring-after wont work in some case if their still have trailling &#160;
     html.gsub!("&#160;","")

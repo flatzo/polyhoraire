@@ -29,7 +29,7 @@ class Ui
       retry
     end 
     
-    puts schedule.to_xml.to_s
+    puts schedule.to_xml
     
     
     
