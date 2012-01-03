@@ -1,4 +1,4 @@
-# = Tests
-# 
-# * Fill the blanks in test/config.yaml
-# * Run tests using 'rake test'
+= Tests
+ 
+ * Fill the blanks in test/config.yaml
+ * Run tests using 'rake test'
