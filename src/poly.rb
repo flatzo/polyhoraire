@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+$: << File.expand_path(File.dirname(__FILE__))
+
 require 'net/http'
 require 'uri'
 require 'nokogiri'
@@ -13,7 +15,7 @@ module Poly
     
   XSLDocs = {
     :poly2XML     => "./poly/poly2XML.xsl",
-    :exportGoogle => "./google.xsl"
+    :exportGoogle => "./google.xml.xsl"
   }
   
   def fetch(uri,params)
@@ -37,7 +39,7 @@ end
 
 # Run only if the script is called directly from cli
 if __FILE__ == $0
-  require './ui'
+  require './cli'
   
-  Ui.instance.run
+  CLI.instance.run
 end

@@ -1,8 +1,9 @@
 require 'singleton'
-require './poly/auth'
-require './poly/schedule'
+require 'poly/auth'
+require 'poly/schedule'
+require 'google_exporter.rb'
 
-class Ui
+class CLI
   include Singleton
   
   def initialize  
@@ -29,7 +30,11 @@ class Ui
       retry
     end 
     
+    File.open('fudge.xml','w') {|f| schedule.to_xml_doc.write_xml_to f}
     puts schedule.to_xml
+    
+    
+    google = GoogleExporter.new(schedule.to_xml_doc)
     
     
     
@@ -68,4 +73,6 @@ class Ui
       puts id + " : " + label
     end
   end
+  
+  
 end

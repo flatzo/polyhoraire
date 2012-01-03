@@ -1,4 +1,4 @@
-require './poly'
+require 'poly'
 
 class Poly::Auth
   include Poly
