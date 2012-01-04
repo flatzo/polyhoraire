@@ -21,16 +21,16 @@ service = client.discovered_api('calendar', 'v3')
 
 
 page_token = nil
-result = result = client.execute(:api_method => service.events.list,
-                                 :parameters => {'calendarId' => 'primary'})
+result = client.execute(:api_method => service.calendar_list.list)
 while true
-  events = result.data.items
-  events.each do |e|
+  entries = result.data.items
+  entries.each do |e|
     print e.summary + "\n"
+    print e.id + "\n"
   end
   if !(page_token = result.data.next_page_token)
     break
   end
-  result = result = client.execute(:api_method => service.events.list,
-                                   :parameters => {'calendarId' => 'primary', 'pageToken' => page_token})
+  result = client.execute(:api_method => service.calendar_list.list,
+                          :parameters => {'pageToken' => page_token})
 end
