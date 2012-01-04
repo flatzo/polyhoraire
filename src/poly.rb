@@ -15,7 +15,7 @@ module Poly
     
   XSLDocs = {
     :poly2XML     => "./poly/poly2XML.xsl",
-    :exportGoogle => "./google.xml.xsl"
+    :exportGoogle => "src/google.xml.xsl"
   }
   
   def fetch(uri,params)

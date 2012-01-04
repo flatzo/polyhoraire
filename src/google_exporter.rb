@@ -7,10 +7,8 @@ class GoogleExporter
 
   def initialize(xmlDoc)
     @calendar = to_calendar(xmlDoc)
-    puts @calendar.to_xml.to_s
   end
 
-  ## Using GData utility library : http://code.google.com/apis/gdata/articles/gdata_on_rails.html
   def send
     
   end
@@ -39,7 +37,7 @@ class GoogleExporter
   end
   
   def auth
-    oauth_yaml = YAML.load_file('.google-api.yaml')
+    oauth_yaml = YAML.load_file('conf/google-api.yaml')
     client = Google::APIClient.new
     client.authorization.client_id = oauth_yaml["client_id"]
     client.authorization.client_secret = oauth_yaml["client_secret"]
