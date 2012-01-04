@@ -34,7 +34,7 @@ namespace :setup do
     puts "Utilisateur : "
     credentials['user']      = STDIN.gets.chomp
     puts "Mot de passe : "
-    credentials['passowrd']  = STDIN.gets.chomp
+    credentials['password']  = STDIN.gets.chomp
     puts "Date d'anniversaire : "
     credentials['bday']      = STDIN.gets.chomp   
     yaml = Hash.new
