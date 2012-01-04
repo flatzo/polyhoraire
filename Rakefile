@@ -10,7 +10,7 @@ task :test do
   $: << File.expand_path(File.dirname(__FILE__) + "/test")
   $: << File.expand_path(File.dirname(__FILE__) + "/src")
   
-  $config = YAML.load_file("test/config.yaml")
+  $config = YAML.load_file("conf/test_poly.yaml")
   
   puts "Initialisation des tests"
   require 'ts_all'
@@ -32,16 +32,16 @@ namespace :setup do
     
     credentials = Hash.new
     puts "Utilisateur : "
-    credentials[:user]      = STDIN.gets.chomp
+    credentials['user']      = STDIN.gets.chomp
     puts "Mot de passe : "
-    credentials[:passowrd]  = STDIN.gets.chomp
+    credentials['passowrd']  = STDIN.gets.chomp
     puts "Date d'anniversaire : "
-    credentials[:bday]      = STDIN.gets.chomp   
+    credentials['bday']      = STDIN.gets.chomp   
     yaml = Hash.new
     
-   yaml[:credentials] = credentials
+   yaml['credentials'] = credentials
     
-    File.open('conf/poly.yaml', 'w') do |out|
+    File.open('conf/test_poly.yaml', 'w') do |out|
       YAML.dump(yaml,out)
     end
   end
