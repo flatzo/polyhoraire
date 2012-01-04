@@ -50,6 +50,7 @@ namespace :setup do
   task :google_api do
     puts " ------------------------------ "
     puts " Google-API connection settings "
+    puts "  => https://code.google.com/apis/console"
     puts " ------------------------------ "
     puts " 1. Client ID : "
     clientID = STDIN.gets.chomp
