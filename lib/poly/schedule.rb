@@ -5,9 +5,9 @@ class Poly::Schedule
  
   # Trimesters : Hash of the possible trimesters {:id => :label}
   # postParams : PostParams obtained from the connection
-  def initialize(trimesters,postParams)
-    @params = postParams
-    @trimesters = trimesters
+  def initialize(auth)
+    @params = auth.postParams
+    @trimesters = auth.trimesters
   end
 
   def get(trimester)

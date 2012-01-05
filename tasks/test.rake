@@ -15,12 +15,20 @@ namespace :test do
     Rake::TestTask.new(:all) do |i|
       i.test_files = FileList['test/poly/test_*.rb']
     end
+    
     Rake::TestTask.new(:course) do |i|
       i.test_files = FileList['test/poly/test_course.rb']
     end
+    
     Rake::TestTask.new(:period) do |i|
       i.test_files = FileList['test/poly/test_period.rb']
     end
+    
+    Rake::TestTask.new(:schedule) do |i|
+      i.test_files = FileList['test/poly/test_schedule.rb']
+    end
+    
+    
   end  
   
   
