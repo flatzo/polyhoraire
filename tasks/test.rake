@@ -1,22 +1,13 @@
-desc 'Run tests for this app'
+require 'rake/testtask'
 
-task :test => ['test:online', 'test:offline']
+Rake::TestTask.new(:test) do |i|
+  i.libs << File.expand_path(File.dirname(__FILE__) + "/../src/")
+  i.test_files = FileList['test/poly/test_*.rb','test/test_*.rb']
+end
 
 namespace :test do
-  task :init do
-    $: << File.expand_path(File.dirname(__FILE__) + "/../test")
-    $: << File.expand_path(File.dirname(__FILE__) + "/../src")
-    
-    $config = YAML.load_file("conf/test_poly.yaml")
-    
-    puts "Initialisation des tests"
-  end
-  
-  task :online => ['init'] do
-    require 'ts_online'
-  end
-  
-  task :offline => ['init'] do 
-    require 'ts_offline'
+  Rake::TestTask.new(:offline) do |i|
+    i.libs << File.expand_path(File.dirname(__FILE__) + "/../src/")
+    i.test_files = FileList['test/poly/test_period.rb']
   end
 end

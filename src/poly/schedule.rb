@@ -1,4 +1,4 @@
-require './poly'
+require 'poly'
 
 class Poly::Schedule
   include Poly
@@ -33,6 +33,11 @@ class Poly::Schedule
     xsl = Nokogiri::XSLT(File.read(Poly::XSLDocs[:poly2XML]))
     
     return xsl.transform(doc)
+  end
+  
+  # List of every course
+  def courses
+    
   end
   
   private
