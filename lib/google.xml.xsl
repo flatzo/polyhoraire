@@ -4,46 +4,32 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:str="http://exslt.org/strings"
 xmlns:date="http://exslt.org/dates-and-times"
 exclude-result-prefixes="str date"	>
-<xsl:param name="debutSession"/>
-<xsl:param name="debutSessionB2"/>
-<xsl:param name="debutRelache"/>
-<xsl:param name="finRelache"/>
-<xsl:param name="finRelacheB2"></xsl:param>
-<xsl:param name="finSession"/>
-<xsl:param name="calendrierCours"/>
-<xsl:param name="calendrierLabs"/>
-<xsl:param name="title"/>
-
+<xsl:param name="debutB1"/>
+<xsl:param name="debutB2"/>
+<xsl:param name="fin"/>
 
 	<xsl:template match="/poly">
-		<xsl:if test="$debutSession = ''">
-			<xsl:message terminate="no">manque la date pour le debut de la session (format 'YYYYMMJJ')</xsl:message>
+		<xsl:if test="$debutB1 = ''">
+			<xsl:message terminate="no">Manque la date pour le debut de la periode B1 (format 'YYYYMMJJ')</xsl:message>
 		</xsl:if>
-		<xsl:if test="$debutSessionB2 = ''">
-			<xsl:message terminate="no">manque la date pour le debut de la session pour la semaine B2 (format 'YYYYMMJJ')</xsl:message>
+		<xsl:if test="$debutB2 = ''">
+			<xsl:message terminate="no">Manque la date pour le debut de la periode B2 (format 'YYYYMMJJ')</xsl:message>
 		</xsl:if>
-		<xsl:if test="$debutRelache = ''">
-			<xsl:message terminate="no">manque la date pour le debut de la relache (format 'YYYYMMJJ')</xsl:message>
-		</xsl:if>
-		<xsl:if test="$finSession = ''">
-			<xsl:message terminate="no">manque la date pour la fin de la session (format 'YYYYMMJJ')</xsl:message>
-		</xsl:if>
-		<xsl:if test="$finRelache = ''">
-			<xsl:message terminate="no">manque la date pour la fin de la relache (format 'YYYYMMJJ')</xsl:message>
-		</xsl:if>
-		<xsl:if test="$finRelacheB2 = 'http://schemas.google.com/g/2005'">
-			<xsl:message terminate="no">manque la date pour la fin de la relache pour la semaine B2 (format 'YYYYMMJJ')</xsl:message>
+		<xsl:if test="$fin = ''">
+			<xsl:message terminate="no">Manque la date pour la fin de la periode (format 'YYYYMMJJ')</xsl:message>
 		</xsl:if>
 		
-		<xsl:for-each select="horaire/evenement">
-			<xsl:element name="event">
-				<xsl:call-template name="event">
-					<xsl:with-param name="dateDebutB1" select="$debutSession"/>
-					<xsl:with-param name="dateDebutB2" select="$debutSessionB2"/>
-					<xsl:with-param name="dateFin" select="$debutRelache"/>
-				</xsl:call-template>
-			</xsl:element>
-		</xsl:for-each>
+		<xsl:element name="events">
+			<xsl:for-each select="horaire/evenement">
+				<xsl:element name="event">
+					<xsl:call-template name="event">
+						<xsl:with-param name="dateDebutB1" select="$debutB1"/>
+						<xsl:with-param name="dateDebutB2" select="$debutB2"/>
+						<xsl:with-param name="dateFin" select="$fin"/>
+					</xsl:call-template>
+				</xsl:element>
+			</xsl:for-each>
+		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template name="jour">
@@ -67,23 +53,18 @@ exclude-result-prefixes="str date"	>
 	<xsl:variable name="duration">P<xsl:value-of select="moment/@jour"/>D</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="moment/@semaine = 'B2'">
-				<xsl:for-each select="str:tokenize(date:add($debutSessionB2,$duration),'-')">
+				<xsl:for-each select="str:tokenize(date:add($debutB2,$duration),'-')">
 					<xsl:value-of select="."/>
 				</xsl:for-each>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:for-each select="str:tokenize(date:add($debutSession,$duration),'-')">
+				<xsl:for-each select="str:tokenize(date:add($debutB1,$duration),'-')">
 					<xsl:value-of select="."/>
 				</xsl:for-each>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template name="dateRetourRelache">
-		<xsl:choose>
-			<xsl:when test="moment/@semaine = 'B2'"><xsl:value-of select="$debutRelacheB2"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="$debutRelache"/></xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
+
 	
 	<xsl:template name="debut">
 		<xsl:call-template name="dateDebut"></xsl:call-template>
@@ -108,9 +89,7 @@ exclude-result-prefixes="str date"	>
 		
 		<xsl:variable name="duration">P<xsl:value-of select="$jour"/>D</xsl:variable>
 		
-		<xsl:for-each select="str:tokenize(date:add($date,$duration),'-')">
-			<xsl:value-of select="."/>
-		</xsl:for-each>
+		<xsl:value-of select="date:format-date(date:add($date,$duration),'YYYY-MM-DD')"/>
 	</xsl:template>
 	
 	<xsl:template name="dateHeure">
@@ -182,8 +161,7 @@ exclude-result-prefixes="str date"	>
 			<xsl:value-of select="./local"/>
 		</location>
 		<recurrence>
-				<xsl:text>
-DTSTART;TZID=America/Montreal:</xsl:text>
+				<xsl:text>DTSTART;TZID=America/Montreal:</xsl:text>
 					<xsl:call-template name="dateHeure">
 						<xsl:with-param name="date" select="$dateDebut"/>
 						<xsl:with-param name="jour" select="moment/@jour"/>

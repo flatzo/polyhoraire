@@ -23,7 +23,7 @@ class Poly::Schedule
 
   def to_xml_doc
     html = @response.body.to_s
-    # Too much spaces, substring-after wont work in some case if their still have trailling &#160;
+    # Too much spaces, substring-after wont work in some case if their still have trailling character '&#160;' 
     html.gsub!("&#160;","")
 
     doc = Nokogiri::HTML(html) do |config|
@@ -35,9 +35,9 @@ class Poly::Schedule
     return xsl.transform(doc)
   end
   
-  # List of every course
   def courses
-    
+    doc = to_xml_doc
+    Poly::Course.from_nokogiri(doc)
   end
   
   private

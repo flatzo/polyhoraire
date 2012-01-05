@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require 'singleton'
 require 'poly/auth'
 require 'poly/schedule'

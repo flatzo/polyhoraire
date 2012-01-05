@@ -7,7 +7,7 @@ class TestPeriod < Test::Unit::TestCase
     assert_nothing_raised do
       xml = Nokogiri::XML(File.read("test/asset/schedule.xml"))
       
-      p = Poly::Period.from_nokogiri(xml.xpath("//evenement/sigle['INF3990']/..").first)
+      p = Poly::Period.from_nokogiri(xml,"INF3990")[0]
       
       
       assert_equal('8:30' ,p.from)    
