@@ -1,6 +1,12 @@
 = Setup
 
  rake setup
+ 
+== Google API
+
+Pour des raisons de sécurité, les identifiants pour accéder au google API ne sont pas inclus. Pour vous en procurer, vous pouvez accéder à la 'Google APIs console' avec le lien ci-desous
+
+https://code.google.com/apis/console
 
 = Tests
 

@@ -1,10 +1,22 @@
 desc 'Run tests for this app'
-task :test do
-  $: << File.expand_path(File.dirname(__FILE__) + "/../test")
-  $: << File.expand_path(File.dirname(__FILE__) + "/../src")
+
+task :test => ['test:online', 'test:offline']
+
+namespace :test do
+  task :init do
+    $: << File.expand_path(File.dirname(__FILE__) + "/../test")
+    $: << File.expand_path(File.dirname(__FILE__) + "/../src")
+    
+    $config = YAML.load_file("conf/test_poly.yaml")
+    
+    puts "Initialisation des tests"
+  end
   
-  $config = YAML.load_file("conf/test_poly.yaml")
+  task :online => ['init'] do
+    require 'ts_online'
+  end
   
-  puts "Initialisation des tests"
-  require 'ts_all'
+  task :offline => ['init'] do 
+    require 'ts_offline'
+  end
 end

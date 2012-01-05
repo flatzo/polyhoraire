@@ -1,12 +1,16 @@
 desc 'Run complet setup'
-task :setup => 'setup:all'
+task :setup => 'setup:user'
 
 
 namespace :setup do
   
-  task :all do
-    Rake::Task['setup:poly_auth'].invoke
-    Rake::Task['setup:google_api'].invoke
+  desc 'Configuration complete (developpeur)'
+  task :developper => [:user,:poly_auth]
+  desc 'Configuration minimale (utilisateur)'
+  task :user => [:dependencies,:google_api]
+  
+  task :dependencies do
+    system 'bundle install'
   end
   
   desc 'Configure your acces to poly for unit-test'
