@@ -7,8 +7,10 @@ class Poly::Trimester
   DAY_RANGE = (1..5)
   WEEK_RANGE = (1..2)
   
+  # Create from a YAML file wich is situated in 'conf/trimesters.yaml'
   def self.fromYAML(trimesterID)
     config = YAML.load_file("conf/trimesters.yaml")
+    raise ArgumentError, "Invalid trimester : " + trimesterID.to_s unless config.include?(trimesterID)
     selected = config[trimesterID]
     
     
@@ -19,6 +21,16 @@ class Poly::Trimester
     exceptions  = selected['exceptions']
     
     return self.new(starts, schoolBreak, ends, holidays, exceptions)
+  end
+  
+  # period : Period object for wich you want every dates it occurs
+  # Returns the list of dates for the course period
+  def getDates(period)
+    if period.week == 0
+      dates = @week[1][period.weekDay] + @week[2][period.weekDay] 
+      return dates.sort
+    end
+    return @week[period.week][period.weekDay].sort
   end
   
   private

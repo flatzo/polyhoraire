@@ -12,7 +12,7 @@ class TestPeriod < Test::Unit::TestCase
       
       assert_equal('8:30' ,p.from)    
       assert_equal('10:30',p.to)
-      assert_equal('2'    ,p.weekDay)
+      assert_equal(2    ,p.weekDay)
       assert_equal('01'    ,p.group)
       assert_equal('M-1020',p.location)
       assert_equal(false    ,p.isLab)

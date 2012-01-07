@@ -22,8 +22,7 @@ class TestSchedule < Test::Unit::TestCase
       
       auth.connect(user,password,bday)
       
-      schedule = Poly::Schedule.new(auth)
-      schedule.get('20121')
+      schedule = Poly::Schedule.new(auth,20121)
       
       assert_equal(doc.to_s ,schedule.to_xml)    
     end

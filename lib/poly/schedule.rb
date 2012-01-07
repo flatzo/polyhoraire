@@ -1,22 +1,20 @@
 require 'poly'
+require 'poly/trimester'
 
 class Poly::Schedule
   include Poly
  
   # Trimesters : Hash of the possible trimesters {:id => :label}
   # postParams : PostParams obtained from the connection
-  def initialize(auth)
+  def initialize(auth,trimester)
     @params = auth.postParams
     @trimesters = auth.trimesters
+    
+    @trimester = Poly::Trimester.fromYAML(trimester)
+    
+    get(trimester)
   end
 
-  def get(trimester)
-    raise "Invalid trimester" unless trimesterValid?(trimester)
-    
-    @params['trimestre'] = trimester
-    @response = fetch(Poly::URL[:schedule],@params)
-  end
-  
   def to_xml
     to_xml_doc.to_s
   end
@@ -37,12 +35,19 @@ class Poly::Schedule
   
   def courses
     doc = to_xml_doc
-    Poly::Course.from_nokogiri(doc)
+    Poly::Course.from_nokogiri(doc,@trimester)
   end
   
   private
   
+  def get(trimester)
+    raise "Invalid trimester" unless trimesterValid?(trimester)
+    
+    @params['trimestre'] = trimester
+    @response = fetch(Poly::URL[:schedule],@params)
+  end
+  
   def trimesterValid?(id)
-    return @trimesters.has_key?(id)
+    return @trimesters.has_key?(id.to_s)
   end
 end

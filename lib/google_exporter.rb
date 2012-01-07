@@ -13,19 +13,16 @@ class GoogleExporter
           'summary' => course.acronym + '(' + period.group + ') ' + period.isLab ? '[Lab]' : '' ,
           'location' => period.location,
           'start' => {
-            'dateTime' => dateTime(schedule.trimester.start),
+            'dateTime' => dateTime(schedule.trimester.start, period.from),
             'timeZone' => 'America/Montreal'
           },
           'end' => {
-            'dateTime' => dateTime(schedule.trimester.end),
+            'dateTime' => dateTime(schedule.trimester.start, period.to),
             'timeZone' => 'America/Montreal'
           },
-          'attendees' => [
-            {
-              'email' => 'attendeeEmail'
-            },
-            #...
-          ]
+          'recurrence' => [
+              'RDATE;VALUE=DATE:'
+            ]
         }
       end
     end
@@ -80,6 +77,10 @@ class GoogleExporter
   
   def dateTime(date, time)
     DateTime.parse(date + ' ' + time).strftime('yyyy-mm-ddTHH:MM:ss')
+  end
+  
+  def rDates(day, week)
+    
   end
   
   def to_calendar(xmlDoc)
