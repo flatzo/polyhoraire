@@ -27,8 +27,6 @@ class Poly::Period
     
       return periods
     end
-    
-   
   end
   
   def to_s

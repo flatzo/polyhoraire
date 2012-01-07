@@ -5,12 +5,30 @@ require 'yaml'
 
 class GoogleExporter
 
-  def initialize(xmlDoc)
-    @calendar = to_calendar(xmlDoc)
-  end
-
-  def send
-    
+  def send(schedule)
+    schedule.courses.each do |course|
+      course.each do |period|
+        
+        event = {
+          'summary' => course.acronym + '(' + period.group + ') ' + period.isLab ? '[Lab]' : '' ,
+          'location' => period.location,
+          'start' => {
+            'dateTime' => dateTime(schedule.trimester.start),
+            'timeZone' => 'America/Montreal'
+          },
+          'end' => {
+            'dateTime' => dateTime(schedule.trimester.end),
+            'timeZone' => 'America/Montreal'
+          },
+          'attendees' => [
+            {
+              'email' => 'attendeeEmail'
+            },
+            #...
+          ]
+        }
+      end
+    end
   end
   
   def selectCalendar(idUrl)
@@ -59,6 +77,10 @@ class GoogleExporter
   end
   
   private 
+  
+  def dateTime(date, time)
+    DateTime.parse(date + ' ' + time).strftime('yyyy-mm-ddTHH:MM:ss')
+  end
   
   def to_calendar(xmlDoc)
     xsl = Nokogiri::XSLT(File.read(Poly::XSLDocs[:exportGoogle]))

@@ -28,6 +28,10 @@ namespace :test do
       i.test_files = FileList['test/poly/test_schedule.rb']
     end
     
+    Rake::TestTask.new(:trimester) do |i|
+      i.test_files = FileList['test/poly/test_trimester.rb']
+    end
+    
     
   end  
   
