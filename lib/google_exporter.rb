@@ -14,10 +14,10 @@ class GoogleExporter
       course.periods.each do |period|
         
         courseBeginsOn = schedule.trimester.starts + period.weekDay - 1
-        puts dateTime(courseBeginsOn, period.to)
         event = {
           'summary' => course.acronym + '(' + period.group + ') ' + (period.isLab ? '[Lab]' : '') ,
           'location' => period.location,
+          'timeZone' => 'America/Montreal',
           'start' => {
             'dateTime' => dateTime(courseBeginsOn, period.from),
             'timeZone' => 'America/Montreal'
@@ -48,7 +48,7 @@ event = {
 }
 =end     
         result = @client.execute(:api_method => @service.events.insert,
-                        :parameters => {'calendarId' => 'bmsj63rckceis8d0apkahs3r6c@group.calendar.google.com'},
+                        :parameters => {'calendarId' => 'cet42kpqp9hu4vmd9c26g46uug@group.calendar.google.com'},
                         :body_object => event,
                         :headers => {'Content-Type' => 'application/json'})
         puts result.data.id.to_s
@@ -104,14 +104,15 @@ event = {
   private 
   
   def dateTime(date, time)
-    DateTime.parse(date.to_s + ' ' + time).strftime('%FT%T')
+    date = DateTime.parse(date.to_s + ' ' + time) + Rational(5,24)
+    date.strftime('%FT%TZ')
   end
   
   def rDates(trimester,period)
     str = ''
     trimester.getDates(period).each do |date|
-      date = DateTime.parse(date.to_s + ' ' + period.from)
-      str += date.strftime('%Y%m%dT%H%M%S,')
+      date = DateTime.parse(date.to_s + ' ' + period.from) + Rational(5,24)
+      str += date.strftime('%Y%m%dT%H%M%SZ,')
     end
     str.chomp(',')
   end
