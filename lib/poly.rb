@@ -39,7 +39,7 @@ end
 
 # Run only if the script is called directly from cli
 if __FILE__ == $0
-  require './cli'
+  require 'cli'
   
   CLI.instance.run
 end

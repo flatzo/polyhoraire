@@ -9,9 +9,13 @@ class GoogleExporter
   def initialize
     auth
     @tz = TZInfo::Timezone.get('America/Montreal')
+    @sentEvents = Array.new
   end
 
   def send(schedule,toCalID)
+    @sentEvents = Array.new
+    @sentCalendarID = toCalID
+    
     schedule.courses.each do |course|
       course.periods.each do |period|
         
@@ -33,30 +37,25 @@ class GoogleExporter
               'RDATE;VALUE=DATE:' + rDates(schedule.trimester,period)
             ]
         }
-=begin
-event = {
-  'summary' => 'Appointment',
-  'location' => 'Somewhere',
-  'start' => {
-     'dateTime' => '2011-06-03T10:00:00.000-07:00',
-     'timeZone' => 'America/Montreal'
-  },
-  'end' => {
-     'dateTime' => '2011-06-03T10:25:00.000-07:00',
-     'timeZone' => 'America/Montreal'
-  },
-  'recurrence' => [
-    "RRULE:FREQ=DAILY;COUNT=5"
-  ]
-}
-=end     
+
         result = @client.execute(:api_method => @service.events.insert,
                         :parameters => {'calendarId' => toCalID},
                         :body_object => event,
                         :headers => {'Content-Type' => 'application/json'})
-        puts result.data.id.to_s
+        @sentEvents.push(result)
       end
     end
+  end
+  
+  def deleteEvent(eventID,calendarID)
+    result = @client.execute(:api_method => @service.events.delete,
+                            :parameters => {'calendarId' => calendarID, 'eventId' => eventID})
+  end
+  
+  def deleteSentEvents
+    @sentEvents.each do |event|
+      deleteEvent(event.data.id,@sentCalendarID)
+    end  
   end
   
   def selectCalendar(idUrl)
@@ -109,7 +108,6 @@ event = {
   def dateTime(date, time)
     date = DateTime.parse(date.to_s + ' ' + time)
     date = @tz.local_to_utc(date)
-    puts "dateTime : "  + date.strftime('%FT%TZ')
     date.strftime('%FT%TZ')
   end
   
@@ -118,7 +116,6 @@ event = {
     trimester.getDates(period).each do |date|
       date = DateTime.parse(date.to_s + ' ' + period.from)
       date = @tz.local_to_utc(date)
-      puts "rDates : " + date.strftime('%Y%m%dT%H%M%SZ,')
       str += date.strftime('%Y%m%dT%H%M%SZ,')
     end
     str.chomp(',')

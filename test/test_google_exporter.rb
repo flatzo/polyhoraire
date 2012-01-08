@@ -21,6 +21,9 @@ class TestGoogleExporter < Test::Unit::TestCase
   end
   
   def test_send
-    @exporter.send(@schedule,'fughgmo7uuhlh311c46tbtmd60@group.calendar.google.com')
+    @exporter.send(@schedule,'ekd38fnk731clljnj56svvvdgk@group.calendar.google.com')
+    puts "Verify manually that every events have been created and press any key"
+    STDIN.gets.chomp
+    @exporter.deleteSentEvents()
   end
 end
