@@ -14,6 +14,7 @@ class GoogleExporter
       course.periods.each do |period|
         
         courseBeginsOn = schedule.trimester.starts + period.weekDay - 1
+        courseBeginsOn += 7 if period.week == 2
         event = {
           'summary' => course.acronym + '(' + period.group + ') ' + (period.isLab ? '[Lab]' : '') ,
           'location' => period.location,
