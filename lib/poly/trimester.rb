@@ -2,7 +2,7 @@ require 'poly'
 require 'yaml'
 
 class Poly::Trimester
-  attr_reader :week
+  attr_reader :week, :starts
   
   DAY_RANGE = (1..5)
   WEEK_RANGE = (1..2)
@@ -50,7 +50,6 @@ class Poly::Trimester
     WEEK_RANGE.each do |w|
       @week[w] = Hash.new
       DAY_RANGE.each do |d|
-        dates = datesFor(d,w)
         @week[w][d] = datesFor(d,w)
       end
     end

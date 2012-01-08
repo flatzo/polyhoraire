@@ -31,9 +31,11 @@ namespace :test do
     Rake::TestTask.new(:trimester) do |i|
       i.test_files = FileList['test/poly/test_trimester.rb']
     end
-    
-    
   end  
+  
+  Rake::TestTask.new(:google) do |i|
+    i.test_files = FileList['test/test_google_exporter.rb']
+  end
   
   
 end

@@ -1,8 +1,10 @@
 require 'poly'
 require 'poly/trimester'
+require 'poly/course'
 
 class Poly::Schedule
   include Poly
+  attr_reader :trimester
  
   # Trimesters : Hash of the possible trimesters {:id => :label}
   # postParams : PostParams obtained from the connection
@@ -35,7 +37,7 @@ class Poly::Schedule
   
   def courses
     doc = to_xml_doc
-    Poly::Course.from_nokogiri(doc,@trimester)
+    Poly::Course.from_nokogiri(doc)
   end
   
   private
