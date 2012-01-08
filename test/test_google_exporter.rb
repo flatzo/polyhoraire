@@ -21,6 +21,6 @@ class TestGoogleExporter < Test::Unit::TestCase
   end
   
   def test_send
-    @exporter.send(@schedule,'hg9a7o16bm6dj0tmuo481499mc@group.calendar.google.com')
+    @exporter.send(@schedule,'fughgmo7uuhlh311c46tbtmd60@group.calendar.google.com')
   end
 end
