@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'poly/course'
+require 'polyhoraire/course'
 require 'test/unit'
 require 'nokogiri'
 

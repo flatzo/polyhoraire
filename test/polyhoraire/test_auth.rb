@@ -1,4 +1,4 @@
-require 'poly/auth'
+require 'polyhoraire/auth'
 require 'test/unit'
 require 'yaml'
 

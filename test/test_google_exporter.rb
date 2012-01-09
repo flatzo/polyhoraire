@@ -1,6 +1,6 @@
 require 'google_exporter'
-require 'poly/schedule'
-require 'poly/auth'
+require 'polyhoraire/schedule'
+require 'polyhoraire/auth'
 require 'test/unit'
 require 'nokogiri'
 

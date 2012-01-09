@@ -1,4 +1,4 @@
-require 'poly'
+require 'polyhoraire'
 
 require 'nokogiri'
 

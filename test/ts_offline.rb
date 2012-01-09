@@ -2,6 +2,6 @@
 
 # To have tests working, fill in the config.yaml file    
 
-require 'poly/tc_period'
+require 'polyhoraire/tc_period'
 
 

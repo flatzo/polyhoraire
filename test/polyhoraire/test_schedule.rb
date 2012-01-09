@@ -1,5 +1,5 @@
-require 'poly/auth'
-require 'poly/schedule'
+require 'polyhoraire/auth'
+require 'polyhoraire/schedule'
 
 require 'test/unit'
 require 'nokogiri'

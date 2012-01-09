@@ -1,4 +1,4 @@
-require 'poly'
+require 'polyhoraire'
 
 class Poly::Auth
   include Poly

@@ -14,7 +14,7 @@ module Poly
     }
     
   XSLDocs = {
-    :poly2XML     => "lib/poly/poly2XML.xsl",
+    :poly2XML     => "lib/polyhoraire/poly2XML.xsl",
     :exportGoogle => "lib/google.xml.xsl"
   }
   

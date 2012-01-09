@@ -1,3 +1,3 @@
 #!/usr/bin/ruby
 
-require 'poly/tc_auth'
+require 'polyhoraire/tc_auth'

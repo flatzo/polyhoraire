@@ -1,5 +1,5 @@
-require 'poly/trimester'
-require 'poly/period'
+require 'polyhoraire/trimester'
+require 'polyhoraire/period'
 
 require 'test/unit'
 require 'yaml'

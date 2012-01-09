@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require 'polyhoraire'
+require 'rake'
+require 'optparse'
+
+options = {}
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: polyhoraire [options]"
+  
+  options[:user] = nil
+  opts.on('-u', '--user', "Nom d'utilisateur") do |username|
+    options[:user] = username
+  end
+  
+  options[:passowrd] = nil
+  opts.on('-p', '--password', 'Mot de passe') do |password|
+    options[:password] = password
+  end
+  
+  options[:bday] = nil
+  opts.on('-d', '--date', 'Date de fete') do |bday|
+    options[:bday] = bday
+  end
+  
+  options[:config] = nil
+  opts.on('config','')
+  
+
+  opts.on('-h', '--help',"Afficher l'aidre") do
+     puts opts
+     exit
+   end
+end
+
+optparse.parse!
+
+myStr = "This is a test"
+aFile = File.new("myString.txt", "w")
+aFile.write(myStr)
+aFile.close
+
+puts aFile.path.to_s

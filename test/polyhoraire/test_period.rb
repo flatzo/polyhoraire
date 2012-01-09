@@ -1,4 +1,4 @@
-require 'poly/period'
+require 'polyhoraire/period'
 require 'test/unit'
 require 'nokogiri'
 

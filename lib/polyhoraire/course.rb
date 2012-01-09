@@ -1,5 +1,5 @@
-require 'poly'
-require 'poly/period'
+require 'polyhoraire'
+require 'polyhoraire/period'
 require 'nokogiri'
 
 class Poly::Course

@@ -1,6 +1,6 @@
-require 'poly'
-require 'poly/trimester'
-require 'poly/course'
+require 'polyhoraire'
+require 'polyhoraire/trimester'
+require 'polyhoraire/course'
 
 class Poly::Schedule
   include Poly
