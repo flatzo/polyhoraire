@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
+#encoding : UTF-8
 
 require 'polyhoraire'
+require 'polyhoraire/auth'
+require 'polyhoraire/schedule'
+require 'google_exporter'
 require 'rake'
 require 'optparse'
 
@@ -9,36 +13,76 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: polyhoraire [options]"
   
-  options[:user] = nil
-  opts.on('-u', '--user', "Nom d'utilisateur") do |username|
+  options[:user] = ''
+  opts.on('-u', '--user USER', "Nom d'utilisateur") do |username|
     options[:user] = username
   end
   
-  options[:passowrd] = nil
-  opts.on('-p', '--password', 'Mot de passe') do |password|
-    options[:password] = password
+  options[:passowrd] = ''
+  opts.on('-p', '--password PASS', 'Mot de passe') do |password|
+    options[:passowrd] = password
   end
   
-  options[:bday] = nil
-  opts.on('-d', '--date', 'Date de fete') do |bday|
+  options[:bday] = ''
+  opts.on('-d', '--date DATE', 'Date de fete') do |bday|
     options[:bday] = bday
   end
   
-  options[:config] = nil
-  opts.on('config','')
+  options[:trimester] = ''
+  opts.on('-t', '--trimestre TRIM', 'ID du trimester format : AAAAN ou AAAA = année et N = 1,2,3') do |trimester|
+    options[:trimester] = trimester
+  end
+  
+  options[:calID] = ''
+  opts.on('-c', '--calendarID CALID', 'ID du calendrier google') do |calID|
+    options[:calID] = calID
+  end
+  
+  options[:config] = false
+  opts.on('-C','--config','Configurer google API') do 
+    options[:config] = true
+  end
   
 
-  opts.on('-h', '--help',"Afficher l'aidre") do
+  opts.on('-h', '--help',"Afficher l'aide") do
      puts opts
      exit
    end
 end
 
+def noConfigFound? 
+  true unless File.exists?(Poly::userConfDir + '/google-api.yaml')
+end
+
 optparse.parse!
+puts options[:user].to_s + options[:passowrd].to_s + options[:bday].to_s
+unless options[:config] 
+  raise OptionParser::MissingArgument if options[:user] == ''
+  raise OptionParser::MissingArgument if options[:passowrd] == ''
+  raise OptionParser::MissingArgument if options[:bday] == ''
+  raise OptionParser::MissingArgument if options[:trimester] == ''
+  raise OptionParser::MissingArgument if options[:calID] == ''
+end
 
-myStr = "This is a test"
-aFile = File.new("myString.txt", "w")
-aFile.write(myStr)
-aFile.close
+Poly::userConfDir = File.expand_path('~/.polyhoraire/conf')
 
-puts aFile.path.to_s
+if noConfigFound? or options[:config]
+  require 'setup'
+  
+  FileUtils.makedirs Poly::userConfDir
+  
+  Setup.google
+  
+  exit if options[:config]
+end
+
+    
+auth = Poly::Auth.new
+
+auth.connect(options[:user].to_s,options[:passowrd].to_s,options[:bday].to_s)
+    
+schedule = Poly::Schedule.new(auth,options[:trimester])
+
+exporter = GoogleExporter.new
+exporter.send(schedule,options[:calID])
+

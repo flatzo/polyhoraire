@@ -31,7 +31,7 @@ namespace :setup do
     
    yaml['credentials'] = credentials
     
-    File.open('conf/test_poly.yaml', 'w') do |out|
+    File.open(Poly::userConfDir + '/test_poly.yaml', 'w') do |out|
       YAML.dump(yaml,out)
     end
   end
@@ -50,18 +50,11 @@ namespace :setup do
     
     command = "google-api oauth-2-login --scope=" + scope + " --client-id=" + clientID + " --client-secret=" + clientSecret
 
-=begin
-    puts " ------------------------------ "
-    puts " Using the following command   "
-    puts " to prepare configuration file  "
-    puts " ------------------------------ "
-    puts command
-=end
 
     system(command)
-    FileUtils.mv(Dir.home + '/.google-api.yaml', 'conf/google-api.yaml')
+    FileUtils.mv(Dir.home + '/.google-api.yaml', Poly::userConfDir + '/google-api.yaml')
     puts "Creation du fichier de configuration dans :"
-    puts " => conf/google-api.yaml"
+    puts " => " + Poly::userConfDir + "/google-api.yaml"
     
   end
 end

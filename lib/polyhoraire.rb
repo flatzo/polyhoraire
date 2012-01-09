@@ -1,13 +1,12 @@
 #!/usr/bin/ruby
 
-$: << File.expand_path(File.dirname(__FILE__))
-
 require 'net/http'
 require 'uri'
 require 'nokogiri'
 
 
 module Poly
+  
   URL = {
     :connection => "https://www4.polymtl.ca/servlet/ValidationServlet",
     :schedule   => "https://www4.polymtl.ca/servlet/PresentationHorairePersServlet"
@@ -17,6 +16,15 @@ module Poly
     :poly2XML     => "lib/polyhoraire/poly2XML.xsl",
     :exportGoogle => "lib/google.xml.xsl"
   }
+  
+  @userConfDir = 'conf'
+  
+  def self.userConfDir
+    @userConfDir
+  end
+  def self.userConfDir=(value)
+    @userConfDir = value
+  end
   
   def fetch(uri,params)
     url = URI.parse(uri)

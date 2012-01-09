@@ -82,7 +82,7 @@ class GoogleExporter
   end
   
   def auth
-    oauth_yaml = YAML.load_file('conf/google-api.yaml')
+    oauth_yaml = YAML.load_file(Poly::userConfDir + '/google-api.yaml')
     client = Google::APIClient.new
     client.authorization.client_id = oauth_yaml["client_id"]
     client.authorization.client_secret = oauth_yaml["client_secret"]
@@ -97,10 +97,6 @@ class GoogleExporter
     @service = client.discovered_api('calendar', 'v3')
     
     @client = client
-  end
-
-  def auth?
-
   end
   
   private 
