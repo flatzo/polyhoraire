@@ -9,7 +9,7 @@ class Poly::Trimester
   
   # Create from a YAML file wich is situated in 'conf/trimesters.yaml'
   def self.fromYAML(trimesterID)
-    config = YAML.load_file("conf/trimesters.yaml")
+    config = YAML.load_file(Poly::userConfDir + "/trimesters.yaml")
     raise ArgumentError, "Invalid trimester : " + trimesterID.to_s unless config.include?(trimesterID)
     selected = config[trimesterID]
     

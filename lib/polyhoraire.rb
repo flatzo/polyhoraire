@@ -13,8 +13,8 @@ module Poly
     }
     
   XSLDocs = {
-    :poly2XML     => "lib/polyhoraire/poly2XML.xsl",
-    :exportGoogle => "lib/google.xml.xsl"
+    :poly2XML     => File.dirname(__FILE__).to_s + "/polyhoraire/poly2XML.xsl",
+    :exportGoogle => File.dirname(__FILE__).to_s + "/google.xml.xsl"
   }
   
   @userConfDir = 'conf'

@@ -54,6 +54,15 @@ def noConfigFound?
   true unless File.exists?(Poly::userConfDir + '/google-api.yaml')
 end
 
+def fetchTrimesters
+  require 'open-uri'
+  config = open(Poly::userConfDir + '/trimesters.yaml', 'wb')
+  gitConf = open('https://raw.github.com/flatzo/polyhoraire-cli/master/conf/trimesters.yaml')
+  config.write(gitConf.read)
+  config.close
+  
+end
+
 optparse.parse!
 puts options[:user].to_s + options[:passowrd].to_s + options[:bday].to_s
 unless options[:config] 
@@ -76,12 +85,13 @@ if noConfigFound? or options[:config]
   exit if options[:config]
 end
 
-    
+fetchTrimesters
+
 auth = Poly::Auth.new
 
 auth.connect(options[:user].to_s,options[:passowrd].to_s,options[:bday].to_s)
     
-schedule = Poly::Schedule.new(auth,options[:trimester])
+schedule = Poly::Schedule.new(auth,options[:trimester].to_i)
 
 exporter = GoogleExporter.new
 exporter.send(schedule,options[:calID])
