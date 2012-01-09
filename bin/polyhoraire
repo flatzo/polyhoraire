@@ -57,7 +57,7 @@ end
 def fetchTrimesters
   require 'open-uri'
   config = open(Poly::userConfDir + '/trimesters.yaml', 'wb')
-  gitConf = open('https://raw.github.com/flatzo/polyhoraire-cli/master/conf/trimesters.yaml')
+  gitConf = open('https://raw.github.com/flatzo/polyhoraire/master/conf/trimesters.yaml')
   config.write(gitConf.read)
   config.close
   
