@@ -23,7 +23,9 @@ class TestSchedule < Test::Unit::TestCase
       auth.connect(user,password,bday)
       
       schedule = Poly::Schedule.new(auth,20121)
-      
+      afile = File.open('pol.xml','w')
+      afile.write(schedule.to_xml)
+      afile.close
       assert_equal(doc.to_s ,schedule.to_xml)    
     end
   end

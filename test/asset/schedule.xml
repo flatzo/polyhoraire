@@ -29,6 +29,13 @@
       <groupeLaboratoire>02</groupeLaboratoire>
       <nombreCredits>03</nombreCredits>
     </cour>
+    <cour sigle="SSH5201">
+      <nom>ECONOMIQUE DE L'INGENIEUR</nom>
+      <prof>Sophie Bernard</prof>
+      <groupeTheorie>04</groupeTheorie>
+      <groupeLaboratoire>04</groupeLaboratoire>
+      <nombreCredits>03</nombreCredits>
+    </cour>
     <cour sigle="SSH5501">
       <nom>ETHIQUE APPL. A L'INGENIERIE</nom>
       <prof>Laurent Jodoin</prof>
@@ -38,6 +45,12 @@
     </cour>
   </informations>
   <horaire>
+    <evenement type="lab">
+      <moment semaine="B2" jour="1" debut="12:45" fin="15:45"/>
+      <sigle>SSH5201</sigle>
+      <groupe>04</groupe>
+      <local>L-6616</local>
+    </evenement>
     <evenement type="cours">
       <moment semaine="" jour="2" debut="8:30" fin="10:30"/>
       <sigle>INF3990</sigle>
@@ -79,6 +92,12 @@
       <sigle>INF3610</sigle>
       <groupe>01</groupe>
       <local>L-3714</local>
+    </evenement>
+    <evenement type="cours">
+      <moment semaine="" jour="4" debut="13:45" fin="16:45"/>
+      <sigle>SSH5201</sigle>
+      <groupe>04</groupe>
+      <local>L-1720</local>
     </evenement>
     <evenement type="lab">
       <moment semaine="" jour="5" debut="13:45" fin="17:45"/>
