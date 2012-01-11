@@ -1,3 +1,7 @@
+= Installation
+
+ gem install polyhoraire
+
 = Setup
 
  rake setup
