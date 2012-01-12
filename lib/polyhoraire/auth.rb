@@ -1,3 +1,4 @@
+#encoding: UTF-8
 require 'polyhoraire'
 
 class Poly::Auth
@@ -79,6 +80,8 @@ class Poly::Auth
   
   def setStatus(response)
     doc = Nokogiri::HTML(response.body.to_s)  
+    node = doc.xpath("//font[contains(string(.),'Le système est temporairement hors d')]")
+    raise 'Maintenance du dossier etudiant' unless node.empty?
     nodes = doc.xpath("//center/font[@color = '#FF0000']")
     if nodes.empty?
       @connected = true

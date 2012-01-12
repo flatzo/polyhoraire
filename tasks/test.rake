@@ -13,23 +13,27 @@ namespace :test do
   task :poly => ['poly:all']
   namespace :poly do
     Rake::TestTask.new(:all) do |i|
-      i.test_files = FileList['test/poly/test_*.rb']
+      i.test_files = FileList['test/polyhoraire/test_*.rb']
+    end
+    
+    Rake::TestTask.new(:auth) do |i|
+      i.test_files = FileList['test/polyhoraire/test_auth.rb']
     end
     
     Rake::TestTask.new(:course) do |i|
-      i.test_files = FileList['test/poly/test_course.rb']
+      i.test_files = FileList['test/polyhoraire/test_course.rb']
     end
     
     Rake::TestTask.new(:period) do |i|
-      i.test_files = FileList['test/poly/test_period.rb']
+      i.test_files = FileList['test/polyhoraire/test_period.rb']
     end
     
     Rake::TestTask.new(:schedule) do |i|
-      i.test_files = FileList['test/poly/test_schedule.rb']
+      i.test_files = FileList['test/polyhoraire/test_schedule.rb']
     end
     
     Rake::TestTask.new(:trimester) do |i|
-      i.test_files = FileList['test/poly/test_trimester.rb']
+      i.test_files = FileList['test/polyhoraire/test_trimester.rb']
     end
   end  
   
