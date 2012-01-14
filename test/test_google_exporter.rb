@@ -26,4 +26,9 @@ class TestGoogleExporter < Test::Unit::TestCase
     STDIN.gets.chomp
     @exporter.deleteSentEvents()
   end
+  
+  def test_calendarList
+    list = @exporter.calendarList
+    assert(list.has_key?('charlesbriere.flatzo@gmail.com'))
+  end
 end

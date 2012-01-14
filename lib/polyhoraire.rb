@@ -6,6 +6,8 @@ require 'nokogiri'
 
 
 module Poly
+  require 'polyhoraire/auth'
+  require 'polyhoraire/schedule'
   
   URL = {
     :connection => "https://www4.polymtl.ca/servlet/ValidationServlet",
