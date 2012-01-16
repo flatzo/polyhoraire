@@ -67,6 +67,7 @@ class GoogleExporter
         courseBeginsOn += 7 if period.week == 2
         event = {
           'summary' => course.acronym + '(' + period.group + ') ' + (period.isLab ? '[Lab]' : '') ,
+          'description' => course.description ,
           'location' => period.location,
           'timeZone' => 'America/Montreal',
           'start' => {
