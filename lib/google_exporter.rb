@@ -40,7 +40,7 @@ TokenPair.auto_migrate!
 
 
 class GoogleExporter
-  attr_accessor :client, :service
+  attr_reader :sentEvents
   
   def initialize
     @tz = TZInfo::Timezone.get('America/Montreal')
@@ -57,6 +57,7 @@ class GoogleExporter
 
   def send(schedule,toCalID)
     @sentEvents = Array.new
+    events = Array.new
     @sentCalendarID = toCalID
     
     schedule.courses.each do |course|
@@ -81,13 +82,20 @@ class GoogleExporter
             ]
         }
 
-        result = @client.execute(:api_method => @service.events.insert,
+        result = @client.execute!(:api_method => @service.events.insert,
                         :parameters => {'calendarId' => toCalID},
                         :body_object => event,
                         :headers => {'Content-Type' => 'application/json'})
         @sentEvents.push(result)
+        rEvent = {
+          :id => result.data.id,
+          :summary => result.data.summary,
+          :htmlLink => result.data.htmlLink
+        }
+        events.push(rEvent)
       end
     end
+    return events
   end
   
   def deleteEvent(eventID,calendarID)
