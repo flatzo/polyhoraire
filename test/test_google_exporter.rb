@@ -7,6 +7,7 @@ require 'nokogiri'
 class TestGoogleExporter < Test::Unit::TestCase
   def setup
     @exporter = GoogleExporter.new
+    @exporter.auth_cli
     
     auth = Poly::Auth.new
       

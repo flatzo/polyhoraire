@@ -3,40 +3,42 @@ require 'google/api_client'
 require 'nokogiri'
 require 'yaml'
 require 'tzinfo'
-require 'data_mapper'
 
 require 'polyhoraire'
 
 
 # Set up our token store
-DataMapper.setup(:default, 'sqlite::memory:')
 class TokenPair
-  include DataMapper::Resource
 
-  property :id, Serial
-  property :refresh_token, String, :length => 255
-  property :access_token, String, :length => 255
-  property :expires_in, Integer
-  property :issued_at, Integer
-
+  def initialize(hash)
+    if hash != nil
+      @access_token = hash[:access_token]
+      @expires_in   = hash[:expires_in]
+      @issued_at    = hash[:issued_at]
+      @refresh_token= hash[:refresh_token]
+    end
+  end
 
   def update_token!(object)
-    self.refresh_token = object.refresh_token
-    self.access_token = object.access_token
-    self.expires_in = object.expires_in
-    self.issued_at = object.issued_at
+    @refresh_token  = object.refresh_token
+    @access_token   = object.access_token
+    @expires_in     = object.expires_in
+    @issued_at      = object.issued_at
+  end
+  
+  def set?
+    @refresh_token != nil
   end
 
   def to_hash
     return {
-      :refresh_token => refresh_token,
-      :access_token => access_token,
-      :expires_in => expires_in,
-      :issued_at => Time.at(issued_at)
+      :refresh_token  => @refresh_token,
+      :access_token   => @access_token,
+      :expires_in     => @expires_in,
+      :issued_at      => Time.at(@issued_at)
     }
   end
 end
-TokenPair.auto_migrate!
 
 
 class GoogleExporter
@@ -133,7 +135,7 @@ class GoogleExporter
   end
   
   # Returns access token
-  def authWeb(code,tokenID,callBackURI)
+  def authWeb(code,callBackURI,tokenPair = nil)
     oauth_yaml = YAML.load_file(Poly::userConfDir + '/google-api.yaml')
     
     @client = Google::APIClient.new
@@ -143,10 +145,8 @@ class GoogleExporter
     @client.authorization.redirect_uri = callBackURI
     @client.authorization.code = code if code
     
-    if tokenID
-      # Load the access token here if it's available
-      token_pair = TokenPair.get(tokenID)
-      @client.authorization.update_token!(token_pair.to_hash)
+    if tokenPair.set?
+      @client.authorization.update_token!(tokenPair.to_hash)
     end
     
     if @client.authorization.refresh_token && @client.authorization.expired?
@@ -157,22 +157,7 @@ class GoogleExporter
     
     return @client.authorization.access_token
   end
-  
-  # Returns the session token
-  def authWebCallback(tokenID)
-    @client.authorization.fetch_access_token!
-    # Persist the token here
-    token_pair = if tokenID
-      TokenPair.get(tokenID)
-    else
-      TokenPair.new
-    end
-    TokenPair.auto_migrate!
-    token_pair.update_token!(@client.authorization)
-    token_pair.save
-    
-    return token_pair.id
-  end
+
   
   def authURI
     @client.authorization.authorization_uri.to_s
@@ -194,6 +179,13 @@ class GoogleExporter
     @service = client.discovered_api('calendar', 'v3')
     
     @client = client
+  end
+  
+  def newTokenPair 
+    @client.authorization.fetch_access_token!
+    token = TokenPair.new(nil)
+    token.update_token!(@client.authorization)
+    return token
   end
   
   private 
