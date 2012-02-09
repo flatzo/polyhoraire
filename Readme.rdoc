@@ -1,8 +1,10 @@
-= Installation
+= Installation from gem
 
  gem install polyhoraire
 
-= Setup
+= Using source code
+
+== Setup
 
  rake setup
  
