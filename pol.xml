@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<poly>
+  <informations>
+    <cour sigle="INF3005">
+      <nom>COMMUNICATION ECRITE ET ORALE</nom>
+      <prof>Dominique Chass&#xE9;</prof>
+      <groupeTheorie>01</groupeTheorie>
+      <groupeLaboratoire/>
+      <nombreCredits>01</nombreCredits>
+    </cour>
+    <cour sigle="INF3610">
+      <nom>SYSTEMES EMBARQUES</nom>
+      <prof>Guy Bois</prof>
+      <groupeTheorie>01</groupeTheorie>
+      <groupeLaboratoire>01</groupeLaboratoire>
+      <nombreCredits>03</nombreCredits>
+    </cour>
+    <cour sigle="INF3990">
+      <nom>PROJET DE CONC. LOG. EMBARQUE</nom>
+      <prof>J&#xE9;r&#xF4;me Collin</prof>
+      <groupeTheorie>01</groupeTheorie>
+      <groupeLaboratoire>01</groupeLaboratoire>
+      <nombreCredits>04</nombreCredits>
+    </cour>
+    <cour sigle="INF4705">
+      <nom>ANALYSE ET CONCEPTION D'ALGOR.</nom>
+      <prof>&#xC0; d&#xE9;terminer &#xC0; d&#xE9;terminer</prof>
+      <groupeTheorie>01</groupeTheorie>
+      <groupeLaboratoire>02</groupeLaboratoire>
+      <nombreCredits>03</nombreCredits>
+    </cour>
+    <cour sigle="SSH5201">
+      <nom>ECONOMIQUE DE L'INGENIEUR</nom>
+      <prof>Sophie Bernard</prof>
+      <groupeTheorie>04</groupeTheorie>
+      <groupeLaboratoire>04</groupeLaboratoire>
+      <nombreCredits>03</nombreCredits>
+    </cour>
+    <cour sigle="SSH5501">
+      <nom>ETHIQUE APPL. A L'INGENIERIE</nom>
+      <prof>Laurent Jodoin</prof>
+      <groupeTheorie>06</groupeTheorie>
+      <groupeLaboratoire/>
+      <nombreCredits>02</nombreCredits>
+    </cour>
+  </informations>
+  <horaire>
+    <evenement type="lab">
+      <moment semaine="B2" jour="1" debut="12:45" fin="15:45"/>
+      <sigle>SSH5201</sigle>
+      <groupe>04</groupe>
+      <local>L-6616</local>
+    </evenement>
+    <evenement type="cours">
+      <moment semaine="" jour="2" debut="8:30" fin="10:30"/>
+      <sigle>INF3990</sigle>
+      <groupe>01</groupe>
+      <local>M-1020</local>
+    </evenement>
+    <evenement type="lab">
+      <moment semaine="" jour="2" debut="10:30" fin="12:30"/>
+      <sigle>INF3990</sigle>
+      <groupe>01</groupe>
+      <local>L-3712</local>
+    </evenement>
+    <evenement type="cours">
+      <moment semaine="" jour="2" debut="14:45" fin="17:45"/>
+      <sigle>INF3610</sigle>
+      <groupe>01</groupe>
+      <local>L-3816</local>
+    </evenement>
+    <evenement type="cours">
+      <moment semaine="" jour="3" debut="9:30" fin="12:30"/>
+      <sigle>SSH5501</sigle>
+      <groupe>06</groupe>
+      <local>M-2107</local>
+    </evenement>
+    <evenement type="lab">
+      <moment semaine="B2" jour="3" debut="12:45" fin="15:45"/>
+      <sigle>INF4705</sigle>
+      <groupe>02</groupe>
+      <local>L-4712</local>
+    </evenement>
+    <evenement type="cours">
+      <moment semaine="" jour="4" debut="9:30" fin="12:30"/>
+      <sigle>INF4705</sigle>
+      <groupe>01</groupe>
+      <local>B-505</local>
+    </evenement>
+    <evenement type="lab">
+      <moment semaine="B1" jour="4" debut="13:45" fin="16:45"/>
+      <sigle>INF3610</sigle>
+      <groupe>01</groupe>
+      <local>L-3714</local>
+    </evenement>
+    <evenement type="cours">
+      <moment semaine="" jour="4" debut="13:45" fin="16:45"/>
+      <sigle>SSH5201</sigle>
+      <groupe>04</groupe>
+      <local>L-1720</local>
+    </evenement>
+    <evenement type="lab">
+      <moment semaine="" jour="5" debut="13:45" fin="17:45"/>
+      <sigle>INF3990</sigle>
+      <groupe>01</groupe>
+      <local>L-3712</local>
+    </evenement>
+    <evenement type="cours">
+      <moment semaine="" jour="5" debut="17:45" fin="18:45"/>
+      <sigle>INF3005</sigle>
+      <groupe>01</groupe>
+      <local>WEBCOURS</local>
+    </evenement>
+  </horaire>
+</poly>
