@@ -40,7 +40,8 @@ class TokenPair
   end
 end
 
-
+# Class that make it possible to export a Schedule object to a google calendar
+# Before any operation, you must authenticate the user.
 class GoogleExporter
   attr_reader :sentEvents
   
@@ -56,7 +57,7 @@ class GoogleExporter
   end
   
   
-
+  # Send a schedule object to a specified calendarID
   def send(schedule,toCalID)
     @sentEvents = Array.new
     events = Array.new
@@ -99,6 +100,19 @@ class GoogleExporter
       end
     end
     return events
+  end
+  
+  # Create a calendar with the specified name and exports the schedule right after
+  def createAndSend(calendarName,schedule) 
+    calendar = {
+      'summary' => calendarName,
+      'timeZone' => 'America/Los_Angeles'
+    }
+    result = client.execute(:api_method => service.calendars.insert,
+                            :body => JSON.dump(calendar),
+                            :headers => {'Content-Type' => 'application/json'})
+                            
+    send(schedule,result.data.id)
   end
   
   def deleteEvent(eventID,calendarID)
